@@ -1,24 +1,23 @@
-{% set name = "pyephem" %}
 {% set version = "3.7.6.0" %}
-{% set hash_type = "sha256" %}
-{% set hash_value = "143146da32a07a4cf9725b5656ba095d24978c22a0363414203e72c39bae52bd" %}
 
 package:
-  name: '{{ name|lower }}'
-  version: '{{ version }}'
+  name: pyephem
+  version: {{ version }}
 
 source:
-  fn: '{{ name }}-{{ version }}.tar.gz'
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  '{{ hash_type }}': '{{ hash_value }}'
+  url: https://pypi.io/packages/source/p/pyephem/pyephem-{{ version }}.tar.gz
+  sha256: 143146da32a07a4cf9725b5656ba095d24978c22a0363414203e72c39bae52bd
 
 build:
-  number: 0
-  script: python setup.py install
+  number: 1000
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
   build:
+    - {{ compiler('c') }}
+  host:
     - python
+    - pip
   run:
     - python
 
